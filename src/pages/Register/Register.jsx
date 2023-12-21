@@ -11,7 +11,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const { createUser, updateUsers } = useAuth();
+  const { createUser, updateUsers, user } = useAuth();
 
   const {
     register,
@@ -21,6 +21,10 @@ const Register = () => {
   } = useForm();
 
   const navigate = useNavigate();
+
+  if (user) {
+    return <Navigate to="/" />;
+  }
 
   const handleRegister = async (data) => {
     try {

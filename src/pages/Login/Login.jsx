@@ -10,7 +10,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const { login } = useAuth();
+  const { login, user } = useAuth();
 
   const {
     register,
@@ -20,6 +20,10 @@ const Login = () => {
   } = useForm();
 
   const navigate = useNavigate();
+
+  if (user) {
+    return <Navigate to="/" />;
+  }
 
   const handleLogin = async (data) => {
     try {

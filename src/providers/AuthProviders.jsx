@@ -2,15 +2,18 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
+  onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import PropTypes from "prop-types";
-import { createContext, useMemo, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 import auth from "../config/firebase.config.js";
 
 export const AuthContext = createContext(null);
 
 const AuthProviders = ({ children }) => {
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -30,9 +33,25 @@ const AuthProviders = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setLoading(false);
+      setUser(currentUser);
+    });
+
+    return () => {
+      return unsubscribe();
+    };
+  }, []);
+
+  const logout = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
+
   const authInfo = useMemo(
-    () => ({ loading, createUser, updateUsers, login }),
-    [loading]
+    () => ({ loading, createUser, updateUsers, login, user, logout }),
+    [loading, user]
   );
 
   return (

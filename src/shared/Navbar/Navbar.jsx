@@ -1,13 +1,26 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { CiMenuBurger } from "react-icons/ci";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
+  const { user, logout } = useAuth();
+
   const navLinks = [
     {
       title: "Home",
       path: "/",
     },
   ];
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success("you are logged out");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div className="navbar bg-sky-200 max-w-7xl mx-auto rounded-2xl shadow-xl my-5">
@@ -60,7 +73,18 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <button className="btn btn-secondary">Login</button>
+        {user ? (
+          <button
+            onClick={handleLogout}
+            className="btn btn-error"
+          >
+            Logout
+          </button>
+        ) : (
+          <Link to="/">
+            <button className="btn btn-secondary">Login</button>
+          </Link>
+        )}
       </div>
     </div>
   );
