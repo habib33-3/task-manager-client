@@ -5,6 +5,7 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { PiSpinner } from "react-icons/pi";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
+import GoogleLogin from "../../components/GoogleLogin/GoogleLogin";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -57,6 +58,7 @@ const Login = () => {
             <input
               type="email"
               autoComplete="email"
+              placeholder="example@domain.com"
               className="input input-bordered"
               {...register("email", { required: "email is required" })}
             />
@@ -73,7 +75,7 @@ const Login = () => {
             <input
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
-              placeholder="password"
+              placeholder="*******"
               className="input input-bordered"
               {...register("password", {
                 required: "password is required",
@@ -99,7 +101,7 @@ const Login = () => {
               {loading ? (
                 <PiSpinner className="animate-spin mx-auto" />
               ) : (
-                "Register"
+                "Login"
               )}
             </button>
           </div>
@@ -110,9 +112,10 @@ const Login = () => {
             className="link link-primary mx-1"
             to="/register"
           >
-            create account
+            Create account
           </Link>
         </p>
+        <GoogleLogin />
       </div>
     </div>
   );

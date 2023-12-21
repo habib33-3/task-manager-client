@@ -6,6 +6,7 @@ import { PiSpinner } from "react-icons/pi";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import { uploadImg } from "../../utils/uploadImg.js";
+import GoogleLogin from "../../components/GoogleLogin/GoogleLogin.jsx";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -63,7 +64,7 @@ const Register = () => {
             <input
               type="text"
               autoComplete="username"
-              placeholder="name"
+              placeholder="Full Name"
               className="input input-bordered"
               {...register("name", {
                 required: "name is required",
@@ -86,6 +87,7 @@ const Register = () => {
             </label>
             <input
               type="email"
+              placeholder="example@domain.com"
               autoComplete="email"
               className="input input-bordered"
               {...register("email", { required: "email is required" })}
@@ -102,8 +104,8 @@ const Register = () => {
             </label>
             <input
               type={showPassword ? "text" : "password"}
+              placeholder="********"
               autoComplete="current-password"
-              placeholder="password"
               className="input input-bordered"
               {...register("password", {
                 required: "password is required",
@@ -131,7 +133,7 @@ const Register = () => {
               type="file"
               accept="image/*"
               placeholder="photo"
-              className="file-input file-input-bordered file-input-success w-full max-w-xs"
+              className="file-input file-input-bordered file-input-info w-full max-w-xs"
               {...register("img")}
             />
           </div>
@@ -154,6 +156,7 @@ const Register = () => {
             Login Now
           </Link>
         </p>
+        <GoogleLogin />
       </div>
     </div>
   );

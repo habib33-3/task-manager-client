@@ -4,12 +4,16 @@ import {
   updateProfile,
   onAuthStateChanged,
   signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import PropTypes from "prop-types";
 import { createContext, useEffect, useMemo, useState } from "react";
 import auth from "../config/firebase.config.js";
 
 export const AuthContext = createContext(null);
+
+const googleProvider = new GoogleAuthProvider();
 
 const AuthProviders = ({ children }) => {
   const [loading, setLoading] = useState(true);
@@ -49,8 +53,21 @@ const AuthProviders = ({ children }) => {
     return signOut(auth);
   };
 
+  const googleLogin = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
+
   const authInfo = useMemo(
-    () => ({ loading, createUser, updateUsers, login, user, logout }),
+    () => ({
+      loading,
+      createUser,
+      updateUsers,
+      login,
+      user,
+      logout,
+      googleLogin,
+    }),
     [loading, user]
   );
 

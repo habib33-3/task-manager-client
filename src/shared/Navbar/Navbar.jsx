@@ -81,7 +81,7 @@ const Navbar = () => {
             Logout
           </button>
         ) : (
-          <Link to="/">
+          <Link to="/login">
             <button className="btn btn-secondary">Login</button>
           </Link>
         )}
