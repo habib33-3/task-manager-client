@@ -5,13 +5,12 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { PiSpinner } from "react-icons/pi";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
-import { uploadImg } from "../../utils/uploadImg.js";
 
-const Register = () => {
+const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const { createUser, updateUsers } = useAuth();
+  const { login } = useAuth();
 
   const {
     register,
@@ -22,19 +21,14 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const handleRegister = async (data) => {
+  const handleLogin = async (data) => {
     try {
       setLoading(true);
-      await createUser(data.email, data.password);
-
-      const img = await uploadImg(data.img[0]);
-
-      await updateUsers(data.name, img?.data?.display_url);
-
+      await login(data.email, data.password);
       reset();
       setLoading(false);
       navigate("/");
-      toast.success("congrats,you are welcome");
+      toast.success("congrats you are logged in");
     } catch (error) {
       setLoading(false);
       toast.error(error.message);
@@ -50,32 +44,8 @@ const Register = () => {
       <div className="card shrink-0 w-full lg:w-2/5 mx-auto shadow-2xl bg-gray-50 mb-10 pb-3">
         <form
           className="card-body"
-          onSubmit={handleSubmit(handleRegister)}
+          onSubmit={handleSubmit(handleLogin)}
         >
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Name</span>
-            </label>
-            <input
-              type="text"
-              autoComplete="username"
-              placeholder="name"
-              className="input input-bordered"
-              {...register("name", {
-                required: "name is required",
-
-                minLength: {
-                  value: 3,
-                  message: "Minimum 3 characters required",
-                },
-              })}
-            />
-            {errors.name && (
-              <p className="text-red-700 font-bold text-lg">
-                {errors.name.message}
-              </p>
-            )}
-          </div>
           <div className="form-control">
             <label className="label">
               <span className="label-text">Email</span>
@@ -119,18 +89,7 @@ const Register = () => {
               {showPassword ? <IoMdEye /> : <IoMdEyeOff />}
             </span>
           </div>
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Image</span>
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              placeholder="photo"
-              className="file-input file-input-bordered file-input-success w-full max-w-xs"
-              {...register("img")}
-            />
-          </div>
+
           <div className="form-control mt-6">
             <button className="btn btn-primary">
               {loading ? (
@@ -142,12 +101,12 @@ const Register = () => {
           </div>
         </form>
         <p className="text-md text-center text-gray-700 ">
-          Already have an account,{" "}
+          New Here,{" "}
           <Link
             className="link link-primary mx-1"
-            to="/login"
+            to="/register"
           >
-            Login Now
+            create account
           </Link>
         </p>
       </div>
@@ -155,4 +114,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

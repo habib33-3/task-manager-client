@@ -25,8 +25,13 @@ const AuthProviders = ({ children }) => {
     });
   };
 
+  const login = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
   const authInfo = useMemo(
-    () => ({ loading, createUser, updateUsers }),
+    () => ({ loading, createUser, updateUsers, login }),
     [loading]
   );
 
