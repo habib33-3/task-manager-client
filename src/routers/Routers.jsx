@@ -4,6 +4,8 @@ import Home from "../pages/Home/Home";
 import ErrorPage from "../pages/Error/ErrorPage";
 import Register from "../pages/Register/Register";
 import Login from "../pages/Login/Login";
+import PrivateRouter from "./PrivateRouter";
+import AddTask from "../pages/AddTask/AddTask";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,15 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+
+      {
+        path: "addTask",
+        element: (
+          <PrivateRouter>
+            <AddTask />
+          </PrivateRouter>
+        ),
       },
     ],
   },
