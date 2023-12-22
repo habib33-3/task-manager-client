@@ -33,11 +33,12 @@ const AddTask = () => {
       const res = await axios.post("/addTask", task);
 
       if (res.data.insertedId) {
-        setLoading(true);
-        toast.success("Task Added");
         reset();
+        setLoading(false);
+        toast.success("Task Added");
       }
     } catch (error) {
+      setLoading(false);
       toast.error(error.message);
     }
   };
