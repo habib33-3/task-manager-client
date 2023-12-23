@@ -7,6 +7,8 @@ import Login from "../pages/Login/Login";
 import PrivateRouter from "./PrivateRouter";
 import AddTask from "../pages/AddTask/AddTask";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import UpdateTask from "../pages/UpdateTask/UpdateTask";
+import axios from "axios";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,17 @@ const router = createBrowserRouter([
             <Dashboard />
           </PrivateRouter>
         ),
+      },
+
+      {
+        path: "update/:id",
+        element: (
+          <PrivateRouter>
+            <UpdateTask />
+          </PrivateRouter>
+        ),
+        loader: ({params}) =>
+          axios.get(`${import.meta.env.VITE_DB_URL}/task/${params.id}`),
       },
     ],
   },

@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import useAxios from "../../hooks/useAxios";
 import toast from "react-hot-toast";
+import { FaPen } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Task = ({ task }) => {
   const { _id, title, deadline, status, description, priority } = task;
@@ -15,8 +17,8 @@ const Task = ({ task }) => {
       status: data.status,
     };
     const res = await axios.put(`/task/updateStatus/${_id}`, status);
-    if(res.data.modifiedCount){
-        toast.succes("Status Updated")
+    if (res.data.modifiedCount) {
+      toast.success("Status Updated");
     }
   };
 
@@ -30,19 +32,23 @@ const Task = ({ task }) => {
       />
       <div className="collapse-title text-xl font-medium">{title}</div>
       <div className="collapse-content card p-3">
+        <h2 className="text-center">{title}</h2>
         <p className="text-right text-sm">Priority: {priority}</p>
         <p className="text-justify">{description}</p>
         <p>{deadline}</p>
-        <div className="flex">
+        <div className="flex justify-around items-center">
           <div className="flex">
-            <form onSubmit={handleSubmit(handleUpdateStatus)}>
+            <form
+              className="flex justify-center items-center"
+              onSubmit={handleSubmit(handleUpdateStatus)}
+            >
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <span className="label-text">Update Status</span>
                 </div>
                 <select
                   {...register("status")}
-                  className="select select-bordered"
+                  className="select select-bordered select-sm"
                 >
                   <option
                     disabled
@@ -57,6 +63,13 @@ const Task = ({ task }) => {
               </label>
               <button className="btn btn-primary btn-sm">update</button>
             </form>
+          </div>
+          <div className="flex">
+            <Link to={`/update/${_id}`}>
+              <button className="btn btn-square btn-sm btn-success">
+                <FaPen />
+              </button>
+            </Link>
           </div>
         </div>
       </div>
