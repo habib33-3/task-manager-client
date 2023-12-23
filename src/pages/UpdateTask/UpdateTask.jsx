@@ -1,6 +1,5 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import useAuth from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -20,6 +19,8 @@ const UpdateTask = () => {
 
   const axios = useAxios();
 
+  const navigate = useNavigate();
+
   const handleUpdateTask = async (data) => {
     try {
       setLoading(true);
@@ -36,6 +37,7 @@ const UpdateTask = () => {
       if (res.data.modifiedCount) {
         reset();
         setLoading(false);
+        navigate("/dashboard");
         toast.success("Task Updated");
       }
     } catch (error) {

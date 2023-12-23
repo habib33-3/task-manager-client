@@ -2,8 +2,9 @@ import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import useAxios from "../../hooks/useAxios";
 import toast from "react-hot-toast";
-import { FaPen } from "react-icons/fa";
+import { FaPen, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import useTasks from "../../hooks/useTasks";
 
 const Task = ({ task }) => {
   const { _id, title, deadline, status, description, priority } = task;
@@ -12,6 +13,8 @@ const Task = ({ task }) => {
 
   const axios = useAxios();
 
+  const { refetch } = useTasks(status);
+
   const handleUpdateStatus = async (data) => {
     const status = {
       status: data.status,
@@ -19,6 +22,15 @@ const Task = ({ task }) => {
     const res = await axios.put(`/task/updateStatus/${_id}`, status);
     if (res.data.modifiedCount) {
       toast.success("Status Updated");
+    }
+  };
+
+  const handleDeleteTask = async () => {
+    const res = await axios.delete(`/task/delete/${_id}`);
+
+    if (res.data.deletedCount) {
+      toast.success("Task deleted");
+      refetch();
     }
   };
 
@@ -70,6 +82,12 @@ const Task = ({ task }) => {
                 <FaPen />
               </button>
             </Link>
+            <button
+              onClick={handleDeleteTask}
+              className="btn btn-outline btn-square btn-sm btn-error"
+            >
+              <FaTrash />
+            </button>
           </div>
         </div>
       </div>
