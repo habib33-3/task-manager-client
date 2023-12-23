@@ -2,8 +2,8 @@ import Loader from "../../../components/Loader/Loader";
 import Task from "../../../components/Task/Task";
 import useTasks from "../../../hooks/useTasks";
 
-const Todo = () => {
-  const { tasks, isLoading } = useTasks("to-do");
+const Completed = () => {
+  const { tasks, isLoading } = useTasks("completed");
 
   if (isLoading) {
     return <Loader />;
@@ -23,4 +23,4 @@ const Todo = () => {
   );
 };
 
-export default Todo;
+export default Completed;

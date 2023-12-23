@@ -22,6 +22,7 @@ const Task = ({ task }) => {
     const res = await axios.put(`/task/updateStatus/${_id}`, status);
     if (res.data.modifiedCount) {
       toast.success("Status Updated");
+      refetch();
     }
   };
 
