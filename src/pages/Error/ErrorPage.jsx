@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
   return (
-    <section className="flex items-center h-full p-16 dark:bg-gray-900 dark:text-gray-100">
+    <section className="flex items-center h-screen p-16 dark:bg-gray-900 dark:text-gray-100">
       <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
         <div className="max-w-md text-center">
           <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-600">
@@ -12,11 +12,10 @@ const ErrorPage = () => {
             Sorry, we could not find this page.
           </p>
 
-          <Link
-            to="/"
-            className="px-8 py-3 font-semibold rounded dark:bg-indigo-400 dark:text-gray-900"
-          >
-            Back to homepage
+          <Link to="/">
+            <button className="px-8 py-3 mt-10 font-semibold rounded dark:bg-indigo-400 dark:text-gray-900">
+              Back to homepage
+            </button>
           </Link>
         </div>
       </div>
