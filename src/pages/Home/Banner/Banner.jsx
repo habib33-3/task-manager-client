@@ -11,7 +11,7 @@ const Banner = () => {
         </h1>
 
         <Link to="/dashboard">
-          <button className="btn btn-primary">Manage Task</button>
+          <button className="btn btn-primary">Let{"'"}s Explore</button>
         </Link>
       </div>
       <div className="h-full">
