@@ -11,6 +11,16 @@ const Navbar = () => {
       title: "Home",
       path: "/",
     },
+
+    {
+      title:"Create New Task",
+      path:"/addTask"
+    },
+
+    {
+      title:"Dashboard",
+      path:"/dashboard"
+    }
   ];
 
   const handleLogout = async () => {
@@ -42,8 +52,8 @@ const Navbar = () => {
                   to={nav.path}
                   className={({ isActive }) =>
                     isActive
-                      ? "text-gray-700 bg-purple-400 p-2 font-bold active:scale-95"
-                      : "text-white bg-info active:scale-95"
+                      ? "text-gray-700 bg-purple-400 p-2 font-bold active:scale-95 my-2"
+                      : "text-white bg-info active:scale-95 mx-2"
                   }
                 >
                   {nav.title}
@@ -62,8 +72,8 @@ const Navbar = () => {
                 to={nav.path}
                 className={({ isActive }) =>
                   isActive
-                    ? "text-gray-700 bg-purple-400 p-2 font-bold active:scale-95"
-                    : "text-white bg-info active:scale-95"
+                    ? "text-gray-700 bg-purple-400 p-2 font-bold active:scale-95 mx-2"
+                    : "text-white bg-info active:scale-95 mx-2"
                 }
               >
                 {nav.title}
