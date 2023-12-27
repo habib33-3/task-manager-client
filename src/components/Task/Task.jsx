@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import useAxios from "../../hooks/useAxios";
 import toast from "react-hot-toast";
 import { FaPen, FaTrash } from "react-icons/fa";
+import { IoIosCloseCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
 import useTasks from "../../hooks/useTasks";
 
@@ -13,7 +14,7 @@ const Task = ({ task }) => {
 
   const axios = useAxios();
 
-  const { refetch } = useTasks(status);
+  const { refetch } = useTasks();
 
   const handleUpdateStatus = async (data) => {
     const status = {
@@ -36,62 +37,82 @@ const Task = ({ task }) => {
   };
 
   return (
-    <div className="collapse collapse-arrow join-item border border-base-300">
-      <input
-        type="radio"
-        name="my-accordion-4"
-        checked="checked"
-        readOnly
-      />
-      <div className="collapse-title text-xl font-medium">{title}</div>
-      <div className="collapse-content card p-3">
+    <div>
+      <div
+        title="Click to view Details"
+        className={`w-full cursor-pointer px-2 py-3 m-1 text-2xl  border-2 ${
+          status === "to-do"
+            ? "border-yellow-500"
+            : status === "ongoing"
+            ? "border-blue-500"
+            : "border-green-500"
+        }`}
+        onClick={() => document.getElementById(`modal-${_id}`).showModal()}
+      >
         <h2 className="text-center">{title}</h2>
-        <p className="text-right text-sm">Priority: {priority}</p>
-        <p className="text-justify">{description}</p>
-        <p>{deadline}</p>
-        <div className="flex justify-around items-center">
-          <div className="flex">
-            <form
-              className="flex justify-center items-center"
-              onSubmit={handleSubmit(handleUpdateStatus)}
-            >
-              <label className="form-control w-full max-w-xs">
-                <div className="label">
-                  <span className="label-text">Update Status</span>
-                </div>
-                <select
-                  {...register("status")}
-                  className="select select-bordered select-sm"
-                >
-                  <option
-                    disabled
-                    defaultValue={status}
-                  >
-                    Pick one
-                  </option>
-                  <option>to-do</option>
-                  <option>ongoing</option>
-                  <option>completed</option>
-                </select>
-              </label>
-              <button className="btn btn-primary btn-sm">update</button>
-            </form>
-          </div>
-          <div className="flex">
-            <Link to={`/update/${_id}`}>
-              <button className="btn btn-square btn-sm btn-success">
-                <FaPen />
-              </button>
-            </Link>
-            <button
-              onClick={handleDeleteTask}
-              className="btn btn-outline btn-square btn-sm btn-error"
-            >
-              <FaTrash />
+      </div>
+      <dialog
+        id={`modal-${_id}`}
+        className="modal"
+      >
+        <div className="modal-box">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              <IoIosCloseCircle size={20} />
             </button>
+          </form>
+          <div className=" card p-3">
+            <h2 className="text-center text-lg font-bold">{title}</h2>
+            <p className="text-right text-sm capitalize">
+              Priority: {priority}
+            </p>
+            <p className="text-justify text-md">{description}</p>
+            <p className="text-blue-800 text-md ">Deadline: {deadline}</p>
+            <div className="flex justify-around items-center">
+              <div className="flex">
+                <form
+                  className="flex flex-col justify-center items-center gap-2"
+                  onSubmit={handleSubmit(handleUpdateStatus)}
+                >
+                  <label className="form-control w-full max-w-xs">
+                    <div className="label">
+                      <span className="label-text">Update Status</span>
+                    </div>
+                    <select
+                      {...register("status")}
+                      className="select select-bordered select-sm"
+                    >
+                      <option
+                        disabled
+                        defaultValue={status}
+                      >
+                        Pick one
+                      </option>
+                      <option>to-do</option>
+                      <option>ongoing</option>
+                      <option>completed</option>
+                    </select>
+                  </label>
+                  <button className="btn btn-primary btn-sm">update</button>
+                </form>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <Link to={`/update/${_id}`}>
+                  <button className="btn btn-square btn-sm btn-success">
+                    <FaPen />
+                  </button>
+                </Link>
+                <button
+                  onClick={handleDeleteTask}
+                  className="btn btn-outline btn-square btn-sm btn-error"
+                >
+                  <FaTrash />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </dialog>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxios from "./useAxios";
 import useAuth from "./useAuth";
 
-const useTasks = (status) => {
+const useTasks = () => {
   const axios = useAxios();
   const { user } = useAuth();
   const {
@@ -10,9 +10,9 @@ const useTasks = (status) => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["task", status, user.email],
+    queryKey: ["task",  user.email],
     queryFn: async () => {
-      const { data } = await axios.get(`/tasks/${user.email}/${status}`);
+      const { data } = await axios.get(`/tasks/${user.email}`);
 
       return data;
     },

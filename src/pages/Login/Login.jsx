@@ -1,6 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { PiSpinner } from "react-icons/pi";
 import { useForm } from "react-hook-form";
@@ -21,6 +21,8 @@ const Login = () => {
   } = useForm();
 
   const navigate = useNavigate();
+  const location = useLocation();
+  // const from = location.state?.from?.pathName || "/";
 
   if (user) {
     return <Navigate to="/" />;
@@ -32,7 +34,7 @@ const Login = () => {
       await login(data.email, data.password);
       reset();
       setLoading(false);
-      navigate("/");
+      navigate(`${location?.state || "/"}`);
       toast.success("congrats you are logged in");
     } catch (error) {
       setLoading(false);

@@ -17,7 +17,7 @@ const Banner = () => {
       <div className="h-full">
         <img
           src={bannerImg}
-          className="h-96"
+          className="max-h-96"
           alt=""
         />
       </div>
